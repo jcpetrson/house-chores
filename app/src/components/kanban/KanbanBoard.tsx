@@ -6,10 +6,11 @@ import {
   TouchSensor,
   useSensor,
   useSensors,
-  closestCorners,
+  pointerWithin,
+  rectIntersection,
+  type CollisionDetection,
   type DragStartEvent,
   type DragEndEvent,
-  type DragOverEvent,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import type { KanbanTask } from '../../types/kanban';
@@ -18,6 +19,16 @@ import { KANBAN_COLUMNS } from '../../types/common';
 import { KanbanColumn } from './KanbanColumn';
 import { KanbanCard } from './KanbanCard';
 import { TaskModal } from './TaskModal';
+
+const COLUMN_IDS = new Set(KANBAN_COLUMNS.map((c) => c.status));
+
+const collisionDetection: CollisionDetection = (args) => {
+  // First try pointerWithin — works well when pointer is inside a droppable
+  const pointerCollisions = pointerWithin(args);
+  if (pointerCollisions.length > 0) return pointerCollisions;
+  // Fallback to rect intersection for edge cases
+  return rectIntersection(args);
+};
 
 interface KanbanBoardProps {
   tasksByColumn: Record<KanbanStatus, KanbanTask[]>;
@@ -52,6 +63,13 @@ export function KanbanBoard({
     return undefined;
   }
 
+  function resolveColumn(overId: string): KanbanStatus | undefined {
+    // If overId is a column ID, return it directly
+    if (COLUMN_IDS.has(overId as KanbanStatus)) return overId as KanbanStatus;
+    // Otherwise it's a task ID — find which column it's in
+    return findColumn(overId);
+  }
+
   const handleDragStart = useCallback(
     (event: DragStartEvent) => {
       const id = event.active.id as string;
@@ -64,10 +82,6 @@ export function KanbanBoard({
     [tasksByColumn],
   );
 
-  const handleDragOver = useCallback((_event: DragOverEvent) => {
-    // Visual feedback handled by isOver in KanbanColumn
-  }, []);
-
   const handleDragEnd = useCallback(
     (event: DragEndEvent) => {
       setActiveTask(null);
@@ -77,13 +91,7 @@ export function KanbanBoard({
       const activeId = active.id as string;
       const overId = over.id as string;
       const sourceCol = findColumn(activeId);
-
-      // Determine target column: either the card's column or the column id directly
-      let targetCol = findColumn(overId);
-      if (!targetCol) {
-        // over.id is the column itself (droppable id)
-        targetCol = overId as KanbanStatus;
-      }
+      const targetCol = resolveColumn(overId);
 
       if (!sourceCol || !targetCol) return;
 
@@ -133,9 +141,8 @@ export function KanbanBoard({
     <>
       <DndContext
         sensors={sensors}
-        collisionDetection={closestCorners}
+        collisionDetection={collisionDetection}
         onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
