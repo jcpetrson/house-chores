@@ -1,4 +1,4 @@
-import type { KanbanStatus, Urgency, TaskType } from './common';
+import type { KanbanStatus, Urgency } from './common';
 
 export interface KanbanTask {
   id: string;
@@ -8,9 +8,9 @@ export interface KanbanTask {
   urgency: Urgency;
   category: string;
   location: string;
-  type: TaskType;
   estimatedCost?: number;
   createdAt: string;
   completedAt?: string;
+  scheduleItemId?: string;
   sortOrder: number;
 }

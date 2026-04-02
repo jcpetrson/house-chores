@@ -2,15 +2,17 @@ import { AlertTriangle, Clock } from 'lucide-react';
 import type { Season } from '../../types/common';
 import { getMonthName, getSeasonLabel } from '../../lib/date-utils';
 import { CadenceSection } from './CadenceSection';
-import type { useSchedule } from '../../hooks/useSchedule';
+import type { useSchedule, ScheduleItemWithStatus } from '../../hooks/useSchedule';
 
 type ScheduleData = ReturnType<typeof useSchedule>;
 
 interface ScheduleViewProps {
   schedule: ScheduleData;
+  onSendToBoard: (item: ScheduleItemWithStatus) => void;
+  boardTaskScheduleIds: Set<string>;
 }
 
-export function ScheduleView({ schedule }: ScheduleViewProps) {
+export function ScheduleView({ schedule, onSendToBoard, boardTaskScheduleIds }: ScheduleViewProps) {
   const { groups, dueCount, overdueCount, toggleComplete, currentQuarter } =
     schedule;
   const now = new Date();
@@ -55,6 +57,8 @@ export function ScheduleView({ schedule }: ScheduleViewProps) {
             totalCount={group.totalCount}
             defaultExpanded={isCurrent}
             onToggle={toggleComplete}
+            onSendToBoard={onSendToBoard}
+            boardTaskScheduleIds={boardTaskScheduleIds}
           />
         );
       })}

@@ -1,4 +1,4 @@
-import type { DueStatus, Urgency, TaskType } from '../../types/common';
+import type { DueStatus, Urgency } from '../../types/common';
 
 const DUE_STYLES: Record<DueStatus, string> = {
   due: 'bg-amber-100 text-amber-800',
@@ -14,11 +14,6 @@ const URGENCY_STYLES: Record<Urgency, string> = {
   urgent: 'bg-red-100 text-red-700',
 };
 
-const TYPE_STYLES: Record<TaskType, string> = {
-  DIY: 'bg-emerald-100 text-emerald-700',
-  'hire-out': 'bg-purple-100 text-purple-700',
-  TBD: 'bg-gray-100 text-gray-600',
-};
 
 export function DueStatusBadge({ status }: { status: DueStatus }) {
   const label =
@@ -43,10 +38,3 @@ export function UrgencyBadge({ urgency }: { urgency: Urgency }) {
   );
 }
 
-export function TaskTypeBadge({ type }: { type: TaskType }) {
-  return (
-    <span className={`${TYPE_STYLES[type]} rounded px-1.5 py-0.5 text-xs font-medium`}>
-      {type}
-    </span>
-  );
-}

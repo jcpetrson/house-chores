@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { Trash2 } from 'lucide-react';
 import type { KanbanTask } from '../../types/kanban';
-import type { Urgency, TaskType } from '../../types/common';
+import type { Urgency } from '../../types/common';
 import { Modal } from '../shared/Modal';
 
 interface TaskModalProps {
@@ -24,7 +24,6 @@ export function TaskModal({
   const [urgency, setUrgency] = useState<Urgency>(task?.urgency ?? 'routine');
   const [category, setCategory] = useState(task?.category ?? '');
   const [location, setLocation] = useState(task?.location ?? '');
-  const [type, setType] = useState<TaskType>(task?.type ?? 'DIY');
   const [confirmDelete, setConfirmDelete] = useState(false);
 
   const isEdit = !!task;
@@ -39,7 +38,6 @@ export function TaskModal({
       urgency,
       category: category.trim(),
       location: location.trim(),
-      type,
       completedAt: task?.completedAt,
     });
     onClose();
@@ -92,31 +90,17 @@ export function TaskModal({
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className={labelClass}>Urgency</label>
-            <select
-              className={inputClass}
-              value={urgency}
-              onChange={(e) => setUrgency(e.target.value as Urgency)}
-            >
-              <option value="routine">Routine</option>
-              <option value="soon">Soon</option>
-              <option value="urgent">Urgent</option>
-            </select>
-          </div>
-          <div>
-            <label className={labelClass}>Type</label>
-            <select
-              className={inputClass}
-              value={type}
-              onChange={(e) => setType(e.target.value as TaskType)}
-            >
-              <option value="DIY">DIY</option>
-              <option value="hire-out">Hire Out</option>
-              <option value="TBD">TBD</option>
-            </select>
-          </div>
+        <div>
+          <label className={labelClass}>Urgency</label>
+          <select
+            className={inputClass}
+            value={urgency}
+            onChange={(e) => setUrgency(e.target.value as Urgency)}
+          >
+            <option value="routine">Routine</option>
+            <option value="soon">Soon</option>
+            <option value="urgent">Urgent</option>
+          </select>
         </div>
         <div className="flex items-center justify-between border-t pt-4">
           {isEdit && onDelete ? (

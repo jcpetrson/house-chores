@@ -43,6 +43,20 @@ export function getDueStatus(item: ScheduleItem, now: Date): DueStatus {
     return 'due';
   }
 
+  if (item.cadence === 'quarterly' && !item.season) {
+    const currentQ = getCurrentQuarter(now);
+    if (lastDone && isInQuarter(lastDone, now.getFullYear(), currentQ)) {
+      return 'completed';
+    }
+    if (lastDone) {
+      const lastQ = getCurrentQuarter(lastDone);
+      if (lastDone.getFullYear() < now.getFullYear() || getQuarterIndex(lastQ) < getQuarterIndex(currentQ) - 1) {
+        return 'overdue';
+      }
+    }
+    return 'due';
+  }
+
   if (item.cadence === 'quarterly' && item.season) {
     const currentQ = getCurrentQuarter(now);
     const currentQIdx = getQuarterIndex(currentQ);

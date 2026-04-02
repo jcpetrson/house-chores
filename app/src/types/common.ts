@@ -1,5 +1,4 @@
 export type Urgency = 'routine' | 'soon' | 'urgent';
-export type TaskType = 'DIY' | 'hire-out' | 'TBD';
 export type KanbanStatus = 'backlog' | 'up-next' | 'in-progress' | 'done';
 export type Cadence = 'monthly' | 'quarterly' | 'annual';
 export type Season = 'Q1' | 'Q2' | 'Q3' | 'Q4';

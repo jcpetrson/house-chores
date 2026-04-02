@@ -2,13 +2,13 @@ import type { ScheduleItem } from '../types/schedule';
 
 export const SEED_SCHEDULE: ScheduleItem[] = [
   // Monthly
-  { id: 'm01', task: 'Replace HVAC filters', cadence: 'monthly', notes: 'More frequent with dog hair' },
-  { id: 'm02', task: 'Clean garbage disposal', cadence: 'monthly', notes: 'Ice + citrus or baking soda + vinegar' },
+  { id: 'm01', task: 'Replace HVAC filters', cadence: 'quarterly', notes: 'More frequent with dog hair' },
+  { id: 'm02', task: 'Clean garbage disposal', cadence: 'quarterly', notes: 'Ice + citrus or baking soda + vinegar' },
   { id: 'm03', task: 'Run water in rarely-used fixtures', cadence: 'monthly', notes: 'Keep P-traps from drying out' },
   { id: 'm04', task: 'Test smoke and CO detectors', cadence: 'monthly', notes: 'Replace batteries 2x/year' },
   { id: 'm05', task: 'Check water softener salt level', cadence: 'monthly' },
   { id: 'm06', task: 'Inspect under sinks for leaks or moisture', cadence: 'monthly' },
-  { id: 'm07', task: 'Clean range hood filter', cadence: 'monthly' },
+  { id: 'm07', task: 'Clean range hood filter', cadence: 'monthly', skipped: true, skipReason: 'No range hood filter' },
   { id: 'm08', task: 'Check sump pump operation', cadence: 'monthly' },
 
   // Q1 — Winter (January–March)
@@ -31,8 +31,7 @@ export const SEED_SCHEDULE: ScheduleItem[] = [
   { id: 'q2-07', task: 'Inspect deck/patio for rot, loose boards, popped fasteners', cadence: 'quarterly', season: 'Q2' },
   { id: 'q2-08', task: 'Check exterior faucets and hose bibs for freeze damage', cadence: 'quarterly', season: 'Q2' },
   { id: 'q2-09', task: 'Inspect and clean dryer vent', cadence: 'quarterly', season: 'Q2', notes: 'Fire hazard' },
-  { id: 'q2-10', task: 'Open crawlspace vents', cadence: 'quarterly', season: 'Q2' },
-  { id: 'q2-11', task: 'Treat for termites / schedule pest inspection', cadence: 'quarterly', season: 'Q2' },
+  { id: 'q2-11', task: 'Treat for termites / schedule pest inspection', cadence: 'quarterly', season: 'Q2', notes: 'PMSI handles this quarterly' },
   { id: 'q2-12', task: 'Test irrigation system, check heads and zones', cadence: 'quarterly', season: 'Q2' },
   { id: 'q2-13', task: 'Touch up exterior paint and caulking', cadence: 'quarterly', season: 'Q2' },
   { id: 'q2-14', task: 'Inspect and clean window wells', cadence: 'quarterly', season: 'Q2' },
@@ -57,7 +56,6 @@ export const SEED_SCHEDULE: ScheduleItem[] = [
   { id: 'q4-04', task: 'Shut off interior valves to exterior hose bibs', cadence: 'quarterly', season: 'Q4' },
   { id: 'q4-05', task: 'Reverse ceiling fan direction (clockwise for winter)', cadence: 'quarterly', season: 'Q4' },
   { id: 'q4-06', task: 'Inspect and replace weatherstripping as needed', cadence: 'quarterly', season: 'Q4' },
-  { id: 'q4-07', task: 'Close crawlspace vents', cadence: 'quarterly', season: 'Q4' },
   { id: 'q4-08', task: 'Blow out irrigation system', cadence: 'quarterly', season: 'Q4' },
   { id: 'q4-09', task: 'Test generator', cadence: 'quarterly', season: 'Q4' },
   { id: 'q4-10', task: 'Check fireplace / chimney — schedule sweep if needed', cadence: 'quarterly', season: 'Q4' },
@@ -68,17 +66,15 @@ export const SEED_SCHEDULE: ScheduleItem[] = [
   // Annual
   { id: 'a01', task: 'Have HVAC system professionally serviced', cadence: 'annual', notes: 'Spring for AC, fall for heat' },
   { id: 'a02', task: 'Professional chimney inspection and sweep', cadence: 'annual' },
-  { id: 'a03', task: 'Scope main sewer line with camera', cadence: 'annual', notes: 'Especially with mature trees' },
   { id: 'a04', task: 'Flush water heater to remove sediment', cadence: 'annual' },
   { id: 'a05', task: 'Test and inspect all GFCIs and AFCIs', cadence: 'annual' },
   { id: 'a06', task: 'Inspect electrical panel for signs of corrosion or overheating', cadence: 'annual' },
   { id: 'a07', task: 'Check and update home inventory / insurance documentation', cadence: 'annual' },
   { id: 'a08', task: 'Inspect attic for pest intrusion, insulation displacement, moisture', cadence: 'annual' },
-  { id: 'a09', task: 'Inspect crawlspace or basement for moisture, cracks, pest activity', cadence: 'annual' },
   { id: 'a10', task: 'Deep clean dryer vent from exterior termination point', cadence: 'annual' },
   { id: 'a11', task: 'Lubricate all door hinges, locks, and garage door springs', cadence: 'annual' },
   { id: 'a12', task: 'Inspect all toilets for running, leaks at base, and flapper condition', cadence: 'annual' },
   { id: 'a13', task: 'Test garage door auto-reverse safety feature', cadence: 'annual' },
   { id: 'a14', task: 'Reseal natural stone countertops', cadence: 'annual' },
-  { id: 'a15', task: 'Service whole-house humidifier', cadence: 'annual' },
+  { id: 'q4-14', task: 'Service whole-house humidifiers (2 units)', cadence: 'quarterly', season: 'Q4', notes: 'Before heating season' },
 ];

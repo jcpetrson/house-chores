@@ -1,15 +1,18 @@
-import { Check, Info } from 'lucide-react';
+import { Check, Info, ArrowRight } from 'lucide-react';
 import { DueStatusBadge } from '../shared/Badge';
 import type { ScheduleItemWithStatus } from '../../hooks/useSchedule';
 
 interface ScheduleItemRowProps {
   item: ScheduleItemWithStatus;
   onToggle: (id: string) => void;
+  onSendToBoard: (item: ScheduleItemWithStatus) => void;
+  isOnBoard: boolean;
 }
 
-export function ScheduleItemRow({ item, onToggle }: ScheduleItemRowProps) {
+export function ScheduleItemRow({ item, onToggle, onSendToBoard, isOnBoard }: ScheduleItemRowProps) {
   const isCompleted = item.dueStatus === 'completed';
   const isSkipped = item.dueStatus === 'skipped';
+  const canSend = (item.dueStatus === 'due' || item.dueStatus === 'overdue') && !isOnBoard;
 
   return (
     <div
@@ -54,7 +57,24 @@ export function ScheduleItemRow({ item, onToggle }: ScheduleItemRowProps) {
           </span>
         )}
       </div>
-      <DueStatusBadge status={item.dueStatus} />
+      <div className="flex items-center gap-2">
+        {canSend && (
+          <button
+            onClick={() => onSendToBoard(item)}
+            className="flex items-center gap-1 rounded px-1.5 py-0.5 text-xs text-blue-600 hover:bg-blue-50"
+            title="Send to Board"
+          >
+            <ArrowRight size={12} />
+            Board
+          </button>
+        )}
+        {isOnBoard && (
+          <span className="rounded bg-blue-50 px-1.5 py-0.5 text-xs text-blue-500">
+            On Board
+          </span>
+        )}
+        <DueStatusBadge status={item.dueStatus} />
+      </div>
     </div>
   );
 }

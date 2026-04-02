@@ -10,6 +10,8 @@ interface CadenceSectionProps {
   totalCount: number;
   defaultExpanded?: boolean;
   onToggle: (id: string) => void;
+  onSendToBoard: (item: ScheduleItemWithStatus) => void;
+  boardTaskScheduleIds: Set<string>;
 }
 
 export function CadenceSection({
@@ -19,6 +21,8 @@ export function CadenceSection({
   totalCount,
   defaultExpanded = false,
   onToggle,
+  onSendToBoard,
+  boardTaskScheduleIds,
 }: CadenceSectionProps) {
   const [expanded, setExpanded] = useState(defaultExpanded);
 
@@ -53,7 +57,13 @@ export function CadenceSection({
       {expanded && (
         <div className="border-t px-1 py-1">
           {items.map((item) => (
-            <ScheduleItemRow key={item.id} item={item} onToggle={onToggle} />
+            <ScheduleItemRow
+              key={item.id}
+              item={item}
+              onToggle={onToggle}
+              onSendToBoard={onSendToBoard}
+              isOnBoard={boardTaskScheduleIds.has(item.id)}
+            />
           ))}
         </div>
       )}

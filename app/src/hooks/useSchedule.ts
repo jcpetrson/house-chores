@@ -37,6 +37,9 @@ export function useSchedule({ state, updateState }: UseScheduleProps) {
 
   const groups: ScheduleGroup[] = useMemo(() => {
     const monthly = itemsWithStatus.filter((i) => i.cadence === 'monthly');
+    const everyQuarter = itemsWithStatus.filter(
+      (i) => i.cadence === 'quarterly' && !i.season,
+    );
     const annual = itemsWithStatus.filter((i) => i.cadence === 'annual');
 
     const quarters: Season[] = ['Q1', 'Q2', 'Q3', 'Q4'];
@@ -61,7 +64,8 @@ export function useSchedule({ state, updateState }: UseScheduleProps) {
     ];
 
     return [
-      buildGroup('Monthly', 'monthly', monthly),
+      ...(monthly.length > 0 ? [buildGroup('Monthly', 'monthly', monthly)] : []),
+      buildGroup('Every Quarter', 'quarterly', everyQuarter),
       ...reordered,
       buildGroup('Annual', 'annual', annual),
     ];

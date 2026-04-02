@@ -2,7 +2,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { GripVertical, MapPin } from 'lucide-react';
 import type { KanbanTask } from '../../types/kanban';
-import { UrgencyBadge, TaskTypeBadge } from '../shared/Badge';
+import { UrgencyBadge } from '../shared/Badge';
 
 interface KanbanCardProps {
   task: KanbanTask;
@@ -55,7 +55,6 @@ export function KanbanCard({ task, onEdit }: KanbanCardProps) {
           )}
           <div className="flex flex-wrap gap-1">
             <UrgencyBadge urgency={task.urgency} />
-            <TaskTypeBadge type={task.type} />
           </div>
         </div>
       </div>
